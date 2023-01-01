@@ -11,6 +11,20 @@ public class Hangman {
     public static void main(String[] args) {
         System.out.println("HANGMAN");
         System.out.println("The game will be available soon.");
+        Scanner menuInp = new Scanner(System.in);
+        while (true) {
+            System.out.print("Type \"play\" to play game, \"exit\" to quit: ");
+            String input = menuInp.next().trim().toLowerCase();
+
+            if (input.equals("play")) {
+                System.out.println();
+                break;
+            }
+
+            if (input.equals("exit")) {
+                return;
+            }
+        }
 
         List<Character> used = new ArrayList<>();
 
@@ -35,6 +49,7 @@ public class Hangman {
                         System.out.println("That letter doesn't appear in the word");
                     } else if (Arrays.equals(new_result_char, hiddenWordArray)) {
                         System.out.println("You win!!!");
+                        System.out.println("The word → " + hiddenWord);
                         break;
                     } else if (!(boolean) Arrays.equals(new_result_char, hiddenWordChar))
                         hiddenWordChar = new_result_char.clone();
@@ -45,6 +60,8 @@ public class Hangman {
         }
         if (attemps <= 0)
             System.out.println("You lost!");
+        System.out.println("The word → " + hiddenWord);
+
     }
     public static char[] checkout (char[] dict, char[] hiddenWordChar, char userAnswer) {
         byte changed = 0;
