@@ -3,49 +3,101 @@ package CoffeeMachine;
 import java.util.Scanner;
 
 public class CoffeeMachine {
-    private int water;
-    private int milk;
-    private int beans;
-    private int cups;
+    private int water = 400;
+    private int milk = 540;
+    private int beans = 120;
+    private int cups = 9;
+    private int money = 550;
 
     public static void main(String[] args) {
         CoffeeMachine coffeeMachine = new CoffeeMachine();
-        coffeeMachine.Ingredients();
-        coffeeMachine.Cups();
+        coffeeMachine.Information();
+        coffeeMachine.menu();
     }
-
-    public void Ingredients() {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Write how many ml of water the coffee machine has:");
-        this.water = scan.nextInt();
-        System.out.print("Write how many ml of milk the coffee machine has:");
-        this.milk = scan.nextInt();
-        System.out.print("Write how many grams of coffee beans the coffee machine has:");
-        this.beans = scan.nextInt();
-        System.out.print("Write how many cups of coffee you will need:");
-        this.cups = scan.nextInt();
+    public void Information() {
+        System.out.println("The coffee machine has:");
+        System.out.println(water + " of water");
+        System.out.println(milk + " of milk");
+        System.out.println(beans + " of coffee beans");
+        System.out.println(cups + " of disposable cups");
+        System.out.println(money + " of money");
     }
-
-    public void Cups(){
-        int coffeeCups = 0;
-
-        while (true) {
-            if (water >= 200 && milk >= 50 && beans >= 15) {
-                water -= 200;
-                milk -= 50;
-                beans -= 15;
-            } else {
+    public void menu() {
+        Scanner userInput = new Scanner(System.in);
+        System.out.print("Write action (buy, fill, take):");
+        String userChoose = userInput.next();
+        switch (userChoose) {
+            case "buy":
+                System.out.print("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino:");
+                String userChooseCoffee = userInput.next();
+                switch (userChooseCoffee) {
+                    case "1":
+                        espresso();
+                        break;
+                    case "2":
+                        latte();
+                        break;
+                    case "3":
+                        cappuccino();
+                        break;
+                }
                 break;
-            }
-            coffeeCups++;
+            case "fill":
+                fill();
+                break;
+            case "take":
+                take();
+                break;
         }
+    }
 
-        if (coffeeCups < cups) {
-            System.out.println("No, I can make only " + cups + " cups of coffee");
-        } else if (coffeeCups == cups) {
-            System.out.println("Yes, I can make that amount of coffee.");
-        } else {
-            System.out.println("Yes, I can make that amount of coffee (and even " + (coffeeCups - cups) + " more than that)");
-        }
+    public void espresso() {
+        water -= 250;
+        beans -= 16;
+        cups -= 1;
+        money += 4;
+
+        Information();
+    }
+
+    public void latte() {
+        water -= 350;
+        milk -= 75;
+        beans -= 20;
+        cups -= 1;
+        money += 7;
+
+        Information();
+    }
+
+    public void cappuccino() {
+        water -= 200;
+        milk -= 100;
+        beans -= 12;
+        cups -= 1;
+        money += 6;
+
+        Information();
+    }
+
+    public void fill() {
+        Scanner userInput = new Scanner(System.in);
+        System.out.print("Write how many ml of water you want to add:");
+        water += userInput.nextInt();
+        System.out.print("Write how many ml of milk you want to add:");
+        milk += userInput.nextInt();
+        System.out.print("Write how many grams of coffee beans you want to add:");
+        beans += userInput.nextInt();
+        System.out.print("Write how many disposable coffee cups you want to add:");
+        cups += userInput.nextInt();
+
+        Information();
+    }
+
+    public void take() {
+        System.out.println("I gave you " + money);
+        money = 0;
+
+        Information();
     }
 }
